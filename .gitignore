@@ -1,0 +1,16 @@
+/captures
+
+*.iml
+.idea
+.gradle
+gen
+local.properties
+buck-*
+.buckd
+out
+build
+snapshots
+.DS_Store
+_site
+*.apk
+
