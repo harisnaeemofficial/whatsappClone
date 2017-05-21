@@ -11,6 +11,7 @@ import com.example.vihaan.whatsappclone.R;
 import com.example.vihaan.whatsappclone.ui.models.Chat;
 import com.example.vihaan.whatsappclone.ui.models.Message;
 import com.example.vihaan.whatsappclone.ui.models.User;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -42,6 +43,10 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatViewHold
         User user = chat.getUser();
         Message message = chat.getMessage();
 
+        if(!TextUtils.isEmpty(user.getProfilePicUrl()))
+        {
+            Picasso.with(holder.userIV.getContext()).load(user.getProfilePicUrl()).into(holder.userIV);
+        }
         holder.nameTV.setText(user.getName());
         holder.messageTV.setText(message.getLastMessage());
         holder.lastMessageTimeTV.setText(message.getLastMessageTime());
