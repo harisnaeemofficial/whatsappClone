@@ -57,6 +57,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatViewHold
         }
         else
         {
+            holder.unreadMessageCountTV.setVisibility(View.VISIBLE);
             holder.unreadMessageCountTV.setText(chat.getMessage().getUnreadMessageCount());
         }
     }
