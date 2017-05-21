@@ -1,8 +1,14 @@
 package com.example.vihaan.whatsappclone.ui.chatscreen;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.vihaan.whatsappclone.R;
+import com.example.vihaan.whatsappclone.ui.models.Chat;
+
+import java.util.List;
 
 /**
  * Created by vihaan on 21/05/17.
@@ -11,9 +17,16 @@ import android.view.ViewGroup;
 public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatViewHolder> {
 
 
+    private List<Chat> mChats;
+
+    public ChatsAdapter(List<Chat> chats) {
+        mChats = chats;
+    }
+
     @Override
     public ChatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chat, parent, false);
+        return new ChatViewHolder(view);
     }
 
     @Override
@@ -23,7 +36,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatViewHold
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mChats.size();
     }
 
     public static class ChatViewHolder extends RecyclerView.ViewHolder {
