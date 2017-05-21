@@ -15,4 +15,9 @@
     <color name="chat_time_color">#0aea07</color>
     <color name="chat_view_separator">#2faaaaaa</color>
 
+
+    <color name="white">#ffffff</color>
+
+
+
 </resources>
