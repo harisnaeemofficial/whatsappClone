@@ -1,4 +1,4 @@
-package com.example.vihaan.whatsappclone.ui.chatscreen;
+package com.example.vihaan.whatsappclone.ui.homescreen;
 
 import android.graphics.Color;
 import android.os.Bundle;

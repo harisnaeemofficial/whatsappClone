@@ -1,4 +1,4 @@
-package com.example.vihaan.whatsappclone.ui.chatscreen;
+package com.example.vihaan.whatsappclone.ui.homescreen;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
