@@ -80,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
 
         mFragments = new ArrayList<Fragment>();
         mFragments.add(ChatsFragment.newInstance(""));
-        mFragments.add(ChatsFragment.newInstance(""));
-        mFragments.add(ChatsFragment.newInstance(""));
+        mFragments.add(StatusFragment.newInstance());
+        mFragments.add(CallsFragment.newInstance());
 
         return mFragments;
     }
