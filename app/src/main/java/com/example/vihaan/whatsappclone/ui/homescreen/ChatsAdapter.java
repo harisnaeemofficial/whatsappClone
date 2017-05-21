@@ -100,6 +100,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatViewHold
             if(position != RecyclerView.NO_POSITION){
                 Chat chat = mChats.get(position);
                 Intent intent = new Intent(mContext, ChatActivity.class);
+                intent.putExtra(ChatActivity.EXTRAS_CHAT,chat);
                 mContext.startActivity(intent);
             }
         }
