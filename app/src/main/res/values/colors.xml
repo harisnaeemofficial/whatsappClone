@@ -7,4 +7,11 @@
 
 
     <color name="common_border_color">#ffffff</color>
+    <color name="round_green">#0aea07</color>
+
+
+
+    // chat item
+
+    <color name="chat_time_color">#0aea07</color>
 </resources>
