@@ -2,6 +2,7 @@ package com.example.vihaan.whatsappclone.ui.chatscreen;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -36,8 +37,15 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void initView() {
-
         initToolbar();
+        showFragment();
+    }
+
+    private void showFragment()
+    {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayout, ChatFragment.newInstance());
+        ft.commit();
     }
 
     private Chat mChat;

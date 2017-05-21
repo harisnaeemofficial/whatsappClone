@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/default_wallpaper"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/appbarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" >
+            app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <!--<?xml version="1.0" encoding="utf-8"?>
 
@@ -25,70 +25,77 @@
             -->
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                >
-            <!-- android:background="?attr/selectableItemBackgroundBorderless" will cause this Custom View to make ripple effect -->
+                android:layout_height="?actionBarSize">
+                <!-- android:background="?attr/selectableItemBackgroundBorderless" will cause this Custom View to make ripple effect -->
 
-            <LinearLayout
-                android:id="@+id/conversation_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/abc_action_bar_up_description"
-                android:orientation="horizontal">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/userIV"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/pic"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/conversation_image"
-                android:orientation="vertical"
-                android:paddingBottom="2dp"
-                android:paddingLeft="4dp"
-                android:paddingRight="0dp"
-                android:paddingTop="0dp" >
-
-
-                <TextView
-                    android:id="@+id/nameTV"
+                <LinearLayout
+                    android:id="@+id/conversation_image"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="6dp"
-                    android:layout_weight="0.6"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:textSize="18sp"
-                    android:text="Shayan Rais"
-                    android:textStyle="bold" />
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/abc_action_bar_up_description"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/lastSeenTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_marginLeft="6dp"
-                    android:layout_weight="0.4"
-                    android:ellipsize="end"
-                    android:text="last seen 1 hour ago"
-                    android:maxLines="1"
-                    android:textSize="12sp" />
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/userIV"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/pic" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/conversation_image"
+                    android:orientation="vertical"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="0dp"
+                    android:paddingTop="0dp">
 
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/nameTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="6dp"
+                        android:layout_weight="0.6"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="Shayan Rais"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/lastSeenTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginLeft="6dp"
+                        android:layout_weight="0.4"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="last seen 1 hour ago"
+                        android:textSize="12sp" />
+
+
+                </LinearLayout>
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 
 
     </android.support.design.widget.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/appbarLayout">
+
+    </FrameLayout>
+
 </RelativeLayout>
 
