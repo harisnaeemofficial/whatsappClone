@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         tabNames.add("Status");
         tabNames.add("Calls");
         ViewPagerTabAdapter viewPagerTabAdapter = new ViewPagerTabAdapter(getSupportFragmentManager(), getFragments(), tabNames);
+        mViewPager.setOffscreenPageLimit(2);
         mViewPager.setAdapter(viewPagerTabAdapter);
     }
 
