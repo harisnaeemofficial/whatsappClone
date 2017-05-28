@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.EditText;
 
 import com.example.vihaan.whatsappclone.R;
 
@@ -35,5 +37,26 @@ public class ChatFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initViews();
+    }
+
+    private void initViews()
+    {
+        initMessageBar();
+    }
+
+
+    private void initMessageBar()
+    {
+        EditText editText = (EditText) getView().findViewById(R.id.editText);
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+            }
+        });
+
     }
 }
