@@ -68,31 +68,23 @@ public class ChatFragment extends Fragment {
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                Log.d("edit text", "before changed");
-                Log.d("s ", s.toString());
-                Log.d("count", count+"");
-                Log.d("after", after+"");
-
                 if(s.length() == 0)
                 {
-                        showSendButton();
+                    showSendButton();
                 }
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                Log.d("edit text", "on text changed");
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
                 if(s.length() == 0)
                 {
                     showAudioButton();
                 }
-                Log.d("edit text", "after text changed");
             }
         });
 
