@@ -2,7 +2,12 @@ package com.example.vihaan.whatsappclone.ui.chatscreen;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +51,8 @@ public class ChatFragment extends Fragment {
     }
 
 
+    FloatingActionButton mFabButton;
+
     private void initMessageBar()
     {
         EditText editText = (EditText) getView().findViewById(R.id.editText);
@@ -58,5 +65,61 @@ public class ChatFragment extends Fragment {
             }
         });
 
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                Log.d("edit text", "before changed");
+                Log.d("s ", s.toString());
+                Log.d("count", count+"");
+                Log.d("after", after+"");
+
+                if(s.length() == 0)
+                {
+                        showSendButton();
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                Log.d("edit text", "on text changed");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if(s.length() == 0)
+                {
+                    showAudioButton();
+                }
+                Log.d("edit text", "after text changed");
+            }
+        });
+
+
+        mFabButton = (FloatingActionButton) getView().findViewById(R.id.floatingButton);
+        mFabButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String tag = (String) mFabButton.getTag();
+                Log.d("fab tag" , tag);
+
+            }
+        });
+    }
+
+    private static final String SEND_IMAGE = "send_image";
+    private void showSendButton()
+    {
+        mFabButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.input_send));
+        mFabButton.setTag(SEND_IMAGE);
+    }
+
+    private static final String MIC_IMAGE= "mic_image";
+    private void showAudioButton()
+    {
+        mFabButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.input_mic_white));
+        mFabButton.setTag(MIC_IMAGE);
     }
 }

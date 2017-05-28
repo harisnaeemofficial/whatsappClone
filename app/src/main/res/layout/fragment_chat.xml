@@ -14,7 +14,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="10dp"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/audioButton"
+        android:layout_toLeftOf="@+id/floatingButton"
         >
 
         <ImageButton
@@ -52,7 +52,7 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@id/audioButton"
+        android:id="@id/floatingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
