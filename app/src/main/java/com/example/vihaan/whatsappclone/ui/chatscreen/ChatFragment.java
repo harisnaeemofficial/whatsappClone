@@ -51,12 +51,13 @@ public class ChatFragment extends Fragment {
     }
 
 
-    FloatingActionButton mFabButton;
+    private FloatingActionButton mFabButton;
+    private EditText mEditText;
 
     private void initMessageBar()
     {
-        EditText editText = (EditText) getView().findViewById(R.id.editText);
-        editText.setOnClickListener(new View.OnClickListener() {
+        mEditText = (EditText) getView().findViewById(R.id.editText);
+        mEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -65,7 +66,7 @@ public class ChatFragment extends Fragment {
             }
         });
 
-        editText.addTextChangedListener(new TextWatcher() {
+        mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if(s.length() == 0)
@@ -96,6 +97,10 @@ public class ChatFragment extends Fragment {
 
                 String tag = (String) mFabButton.getTag();
                 Log.d("fab tag" , tag);
+                if(tag.equalsIgnoreCase(SEND_IMAGE))
+                {
+                    onSendButtonClicked();
+                }
 
             }
         });
@@ -113,5 +118,12 @@ public class ChatFragment extends Fragment {
     {
         mFabButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.input_mic_white));
         mFabButton.setTag(MIC_IMAGE);
+    }
+
+    private void onSendButtonClicked()
+    {
+        String message = mEditText.getText().toString();
+        mEditText.setText("");
+        Log.d("send msg", message);
     }
 }
