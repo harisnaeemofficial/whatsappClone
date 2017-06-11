@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,6 +17,9 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.example.vihaan.whatsappclone.R;
+import com.example.vihaan.whatsappclone.ui.homescreen.ChatsAdapter;
+
+import java.util.List;
 
 /**
  * Created by vihaan on 22/05/17.
@@ -43,11 +48,13 @@ public class ChatFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initViews();
+        showChats();
     }
 
     private void initViews()
     {
         initMessageBar();
+        initRecyclerView();
     }
 
 
@@ -106,6 +113,16 @@ public class ChatFragment extends Fragment {
         });
     }
 
+    private RecyclerView mRecyclerView;
+    private ChatsAdapter mAdapter;
+
+    private void initRecyclerView()
+    {
+        mRecyclerView= (RecyclerView) getView().findViewById(R.id.chatsRecyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+
     private static final String SEND_IMAGE = "send_image";
     private void showSendButton()
     {
@@ -125,5 +142,18 @@ public class ChatFragment extends Fragment {
         String message = mEditText.getText().toString();
         mEditText.setText("");
         Log.d("send msg", message);
+    }
+
+    private void showChats()
+    {
+        List<ChatMessage> chatMessages = getChatMessages();
+
+    }
+
+    private List<ChatMessage> getChatMessages()
+    {
+        List<ChatMessage> chatMessages = null;
+
+        return chatMessages;
     }
 }
