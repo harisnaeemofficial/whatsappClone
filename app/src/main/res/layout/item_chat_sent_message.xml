@@ -6,17 +6,36 @@
     <ImageView
         android:id="@+id/chatIV"
         android:layout_width="220dp"
-        android:layout_height="220dp" />
+        android:layout_height="220dp"
+        android:layout_alignParentRight="true" />
 
-    <TextView
-        android:id="@+id/chatTV"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/balloon_outgoing_normal"
-        android:text="hello wassup"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:textColor="@android:color/black"
-        />
+        android:background="@drawable/balloon_outgoing_normal"
+        >
+
+
+        <TextView
+            android:id="@+id/chatTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="hello wassup"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10:45 PM"
+            android:layout_toRightOf="@id/chatTV"
+            android:textSize="12sp"
+            android:layout_marginTop="8dp"
+            android:drawableRight="@drawable/message_got_read_receipt_from_target"
+            android:drawablePadding="5dp"
+            />
+
+    </RelativeLayout>
 
 </RelativeLayout>
