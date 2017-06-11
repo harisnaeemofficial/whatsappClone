@@ -17,8 +17,16 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.example.vihaan.whatsappclone.R;
-import com.example.vihaan.whatsappclone.ui.homescreen.ChatsAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -114,7 +122,6 @@ public class ChatFragment extends Fragment {
     }
 
     private RecyclerView mRecyclerView;
-    private ChatsAdapter mAdapter;
 
     private void initRecyclerView()
     {
@@ -144,16 +151,64 @@ public class ChatFragment extends Fragment {
         Log.d("send msg", message);
     }
 
+    private ChatAdapter mChatAdapter;
     private void showChats()
     {
-        List<ChatMessage> chatMessages = getChatMessages();
+        try {
+            List<ChatMessage> chatMessages = getChatMessages();
+            mChatAdapter = new ChatAdapter(getActivity(), chatMessages);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    private List<ChatMessage> getChatMessages()
-    {
+    private List<ChatMessage> getChatMessages() throws IOException, JSONException {
         List<ChatMessage> chatMessages = null;
 
+        JSONObject jsonObject ;
+        String json;
+
+        InputStream is = getActivity().getAssets().open("chatmessages.json");
+
+        int size = is.available();
+        byte[] buffer = new byte[size];
+        is.read(buffer);
+        is.close();
+        json = new String(buffer, "UTF-8");
+
+        jsonObject = new JSONObject(json);
+        JSONArray jsonArray = (JSONArray) jsonObject.get("1");
+
+        Type listType = new TypeToken<List<ChatMessage>>() {}.getType();
+
+        chatMessages = new Gson().fromJson(jsonArray.toString(), listType);
+
         return chatMessages;
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
