@@ -157,7 +157,7 @@ public class ChatFragment extends Fragment {
         try {
             List<ChatMessage> chatMessages = getChatMessages();
             mChatAdapter = new ChatAdapter(getActivity(), chatMessages);
-
+            mRecyclerView.setAdapter(mChatAdapter);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
