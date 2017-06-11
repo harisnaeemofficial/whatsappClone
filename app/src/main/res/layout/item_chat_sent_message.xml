@@ -3,17 +3,20 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/chatTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/input"
-        android:layout_alignParentRight="true"
-        android:text="hello wassup"/>
-
     <ImageView
         android:id="@+id/chatIV"
         android:layout_width="220dp"
         android:layout_height="220dp" />
+
+    <TextView
+        android:id="@+id/chatTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/balloon_outgoing_normal"
+        android:text="hello wassup"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:textColor="@android:color/black"
+        />
 
 </RelativeLayout>

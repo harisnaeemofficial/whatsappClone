@@ -14,6 +14,8 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/item_chat_sent_message"
         android:layout_above="@+id/inputLL"
+        android:paddingTop="5dp"
+        android:clipToPadding="false"
         />
 
 
