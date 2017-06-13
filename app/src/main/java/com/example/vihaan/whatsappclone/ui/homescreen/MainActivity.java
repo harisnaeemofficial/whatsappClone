@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,8 @@ import com.example.vihaan.whatsappclone.ui.common.adapters.ViewPagerTabAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.vihaan.whatsappclone.ui.chatscreen.ChatActivity.tag;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -28,22 +31,19 @@ public class MainActivity extends AppCompatActivity {
         initViews();
     }
 
-    private void initViews()
-    {
+    private void initViews() {
         initToolbar();
         initNewMessageFloatingButton();
         initViewPager();
         initTabLayout();
     }
 
-    private void initToolbar()
-    {
+    private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 
-    private void initNewMessageFloatingButton()
-    {
+    private void initNewMessageFloatingButton() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ViewPager mViewPager;
-    private void initViewPager()
-    {
+
+    private void initViewPager() {
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         List<String> tabNames = new ArrayList<String>();
         tabNames.add("Chats");
@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private List<Fragment> mFragments;
-    private List<Fragment> getFragments()
-    {
+
+    private List<Fragment> getFragments() {
 
         mFragments = new ArrayList<Fragment>();
         mFragments.add(ChatsFragment.newInstance(""));
@@ -107,5 +107,36 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(tag, " onStart()");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(tag, " onResume()");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(tag, " onPause()");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(tag, " onStop()");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(tag, " onDestroy()");
+
     }
 }
