@@ -1,5 +1,6 @@
 package com.example.vihaan.whatsappclone.ui.homescreen;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -37,6 +38,12 @@ public class ChatsFragment extends Fragment {
         ChatsFragment fragment = new ChatsFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
     }
 
     @Nullable

@@ -2,6 +2,7 @@ package com.example.vihaan.whatsappclone.ui.homescreen;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -138,5 +139,10 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d(tag, " onDestroy()");
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 }
