@@ -12,4 +12,8 @@
     <string-array name="spinner_country">
         <item>India</item>
     </string-array>
+
+
+    // create user
+    <string name="profile_info_msg">Please provide your name and an optional profile photo</string>
 </resources>
