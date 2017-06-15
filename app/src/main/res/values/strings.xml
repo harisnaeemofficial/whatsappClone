@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">WhatsappClone</string>
     <string name="action_settings">Settings</string>
+
+
+    //welcome screen
+    <string name="agree_n_continue">Tap "Agree and continue" to accept the WhatsApp Terms of Service and Privacy Policy.</string>
 </resources>

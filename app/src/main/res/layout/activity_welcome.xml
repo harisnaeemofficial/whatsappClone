@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/welcomeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="19dp"
+        android:text="Welcome to Whatsapp"
+        android:textSize="18dp"
+        android:textColor="#118C7E"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/welcomeIV"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ill_eula" />
+
+    <TextView
+        android:id="@+id/agreeNContinueTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/agreeNContinueTVBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/agree_n_continue" />
+
+    <!--
+        <Button
+            android:id="@+id/agreeNContinueBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/agreeNContinueTV"
+            android:layout_centerHorizontal="true"
+            android:text="Agree AND Continue"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_green_round_corners"
+            android:textColor="@color/white"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="-10dp"
+            android:paddingBottom="-10dp"
+            />
+            -->
+
+    <TextView
+        android:id="@+id/agreeNContinueTVBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_green_round_corners"
+        android:paddingBottom="10dp"
+        android:paddingLeft="35dp"
+        android:paddingRight="35dp"
+        android:paddingTop="10dp"
+        android:text="Agree and Continue"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>
