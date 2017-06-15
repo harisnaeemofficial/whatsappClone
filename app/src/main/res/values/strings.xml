@@ -5,4 +5,11 @@
 
     //welcome screen
     <string name="agree_n_continue">Tap "Agree and continue" to accept the WhatsApp Terms of Service and Privacy Policy.</string>
+
+
+    //verify screen
+    <string name="verify_phone_msg">WhatsApp will send and SMS message to verify your phone number. Enter your country code and phone number.</string>
+    <string-array name="spinner_country">
+        <item>India</item>
+    </string-array>
 </resources>

@@ -20,6 +20,7 @@
             android:name=".ui.chatscreen.ChatActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".ui.welcomeScreen.WelcomeActivity"
             android:screenOrientation="portrait"
@@ -29,6 +30,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.verifyPhoneScreen.VerifyPhoneActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
     </application>
 
