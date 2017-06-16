@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.vihaan.whatsappclone.R;
 import com.example.vihaan.whatsappclone.ui.homescreen.MainActivity;
+import com.example.vihaan.whatsappclone.ui.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -106,9 +107,11 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
     }
 
 
-    private void onAuthSuccess(FirebaseUser user) {
+    private void onAuthSuccess(FirebaseUser firebaseUser) {
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users").child(user.getUid()).setValue(user);
+        User user = new User();
+        user.setName(usernameFromEmail(firebaseUser.getEmail()));
+        mDatabase.child("users").child(firebaseUser.getUid()).setValue(user);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -128,6 +131,14 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
     public void hideProgressDialog() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
+        }
+    }
+
+    private String usernameFromEmail(String email) {
+        if (email.contains("@")) {
+            return email.split("@")[0];
+        } else {
+            return email;
         }
     }
 
