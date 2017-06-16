@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "302559653497",
+    "firebase_url": "https://fir-demo-f1a77.firebaseio.com",
+    "project_id": "fir-demo-f1a77",
+    "storage_bucket": "fir-demo-f1a77.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302559653497:android:fcfef757a832647b",
+        "android_client_info": {
+          "package_name": "com.google.firebase.quickstart.database"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302559653497-lo68rnr06tr06iepmbkjk5esli7hg61d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOIX-KM_i-Wg7WHowyKlxraKIJ_KHw9ME"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302559653497:android:b4fcbe93638ce381",
+        "android_client_info": {
+          "package_name": "com.whatsapp.clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302559653497-lo68rnr06tr06iepmbkjk5esli7hg61d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOIX-KM_i-Wg7WHowyKlxraKIJ_KHw9ME"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
