@@ -44,7 +44,9 @@
         <activity
             android:name=".ui.userListScreen.UserListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/activity_user_list_label"
+            />
 
     </application>
 

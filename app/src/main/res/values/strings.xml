@@ -16,4 +16,9 @@
 
     // create user
     <string name="profile_info_msg">Please provide your name and an optional profile photo</string>
+
+
+    // user list  screen
+    <string name="activity_user_list_label">Select a contact</string>
+
 </resources>

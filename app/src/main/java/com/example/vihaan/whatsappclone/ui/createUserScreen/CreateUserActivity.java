@@ -55,7 +55,10 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.nextBtn:
-                onNextButtonClicked();
+//                onNextButtonClicked();
+
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
                 break;
         }
 
@@ -64,6 +67,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
     String mUserName;
 
     private void onNextButtonClicked() {
+
         mUserName = mUsernameET.getText().toString();
         if (!TextUtils.isEmpty(mUserName)) {
             createUser();
