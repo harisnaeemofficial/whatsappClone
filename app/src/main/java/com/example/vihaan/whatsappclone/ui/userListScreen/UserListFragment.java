@@ -1,5 +1,6 @@
 package com.example.vihaan.whatsappclone.ui.userListScreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.vihaan.whatsappclone.R;
 import com.example.vihaan.whatsappclone.ui.Database;
+import com.example.vihaan.whatsappclone.ui.chatscreen.ChatActivity;
 import com.example.vihaan.whatsappclone.ui.models.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -69,7 +71,7 @@ public class UserListFragment extends Fragment {
         mAdapter = new FirebaseRecyclerAdapter<User, UserViewHolder>(User.class, R.layout.item_user_list,
                 UserViewHolder.class, userQuery) {
             @Override
-            protected void populateViewHolder(final UserViewHolder viewHolder, final User model, final int position) {
+            protected void populateViewHolder(final UserViewHolder viewHolder, final User user, final int position) {
                 final DatabaseReference postRef = getRef(position);
 
                 // Set click listener for the whole post view
@@ -78,16 +80,16 @@ public class UserListFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         // Launch PostDetailActivity
-//                        Intent intent = new Intent(getActivity(), PostDetailActivity.class);
-//                        intent.putExtra(PostDetailActivity.EXTRA_POST_KEY, postKey);
-//                        startActivity(intent);
+                        Intent intent = new Intent(getActivity(), ChatActivity.class);
+                        intent.putExtra(ChatActivity.EXTRAS_USER, user);
+                        startActivity(intent);
                     }
                 });
 
 
 
                 // Bind Post to ViewHolder, setting OnClickListener for the star button
-                viewHolder.bindToUser(model, new View.OnClickListener() {
+                viewHolder.bindToUser(user, new View.OnClickListener() {
                     @Override
                     public void onClick(View starView) {
 

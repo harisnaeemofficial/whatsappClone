@@ -1,7 +1,6 @@
 package com.example.vihaan.whatsappclone.ui.homescreen;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.vihaan.whatsappclone.R;
-import com.example.vihaan.whatsappclone.ui.chatscreen.ChatActivity;
 import com.example.vihaan.whatsappclone.ui.models.Chat;
 import com.example.vihaan.whatsappclone.ui.models.Message;
 import com.example.vihaan.whatsappclone.ui.models.User;
@@ -98,10 +96,10 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatViewHold
 
             int position = getAdapterPosition();
             if(position != RecyclerView.NO_POSITION){
-                Chat chat = mChats.get(position);
-                Intent intent = new Intent(mContext, ChatActivity.class);
-                intent.putExtra(ChatActivity.EXTRAS_CHAT,chat);
-                mContext.startActivity(intent);
+//                Chat chat = mChats.get(position);
+//                Intent intent = new Intent(mContext, ChatActivity.class);
+//                intent.putExtra(ChatActivity.EXTRAS_CHAT,chat);
+//                mContext.startActivity(intent);
             }
         }
     }
