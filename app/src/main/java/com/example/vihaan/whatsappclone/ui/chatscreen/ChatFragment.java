@@ -182,7 +182,9 @@ public class ChatFragment extends Fragment {
         message.setType("text");
         message.setData(data);
 
-        mDatabase.getReference().child(Database.NODE_MESSAGES).child(getMessageNode()).setValue(message);
+        String messageNode = getMessageNode();
+       String node =  mDatabase.getReference().child(Database.NODE_MESSAGES).child(messageNode).push().getKey();
+        mDatabase.getReference().child(Database.NODE_MESSAGES).child(messageNode).child(node).setValue(message);
     }
 
 
@@ -244,8 +246,7 @@ public class ChatFragment extends Fragment {
    {
 
        String messageNode = getMessageNode();
-       Query messageQuery = mDatabase.getReference().child(Database.NODE_MESSAGES);
-//               .child(messageNode);
+       Query messageQuery = mDatabase.getReference().child(Database.NODE_MESSAGES).child(messageNode);
 
        /*
        messageQuery.addValueEventListener(new ValueEventListener() {
