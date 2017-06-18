@@ -92,6 +92,7 @@ public class User implements Parcelable {
         dest.writeString(this.lastSeen);
         dest.writeValue(this.isTyping);
         dest.writeString(this.status);
+        dest.writeString(this.uid);
     }
 
     public User() {
@@ -103,6 +104,7 @@ public class User implements Parcelable {
         this.lastSeen = in.readString();
         this.isTyping = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.status = in.readString();
+        this.uid= in.readString();
     }
 
     public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {

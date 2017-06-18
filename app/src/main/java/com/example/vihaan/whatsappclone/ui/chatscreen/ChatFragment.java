@@ -17,10 +17,16 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.example.vihaan.whatsappclone.R;
+import com.example.vihaan.whatsappclone.ui.Database;
 import com.example.vihaan.whatsappclone.ui.Util;
+import com.example.vihaan.whatsappclone.ui.models.Message;
 import com.example.vihaan.whatsappclone.ui.models.User;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -47,13 +53,14 @@ public class ChatFragment extends Fragment {
         return fragment;
     }
 
+    private FirebaseDatabase mDatabase;
     private FirebaseAuth mAuth;
     private User mUser;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
-
+        mDatabase = FirebaseDatabase.getInstance();
         Bundle bundle = getArguments();
         mUser = bundle.getParcelable(EXTRAS_USER);
     }
@@ -70,7 +77,7 @@ public class ChatFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initViews();
-        showChats();
+        loadChats();
     }
 
     private void initViews()
@@ -163,18 +170,33 @@ public class ChatFragment extends Fragment {
         String message = mEditText.getText().toString();
         mEditText.setText("");
         Log.d("send msg", message);
+        writeTextMessage(message);
+    }
 
+    private void writeTextMessage(String data)
+    {
+        Message message = new Message();
+        message.setSenderUid(mAuth.getCurrentUser().getUid());
+        message.setReceiverUid(mUser.getUid());
+
+        message.setType("text");
+        message.setData(data);
+
+        mDatabase.getReference().child(Database.NODE_MESSAGES).child(getMessageNode()).setValue(message);
+    }
+
+
+    private String getMessageNode()
+    {
+        String messageNode = null;
         if(mAuth.getCurrentUser() != null)
         {
             FirebaseUser firebaseUser = mAuth.getCurrentUser();
             String sendingUID = firebaseUser.getUid();
             String receivingUID = mUser.getUid();
-            String node = Util.getMessageNode(sendingUID, receivingUID);
-
-
-
+            messageNode = Util.getMessageNode(sendingUID, receivingUID);
         }
-
+        return messageNode;
     }
 
     private ChatAdapter mChatAdapter;
@@ -216,6 +238,80 @@ public class ChatFragment extends Fragment {
         return chatMessages;
 
     }
+
+   private FirebaseRecyclerAdapter<Message, MessageViewHolder> mAdapter;
+   private void loadChats()
+   {
+
+       String messageNode = getMessageNode();
+       Query messageQuery = mDatabase.getReference().child(Database.NODE_MESSAGES);
+//               .child(messageNode);
+
+       /*
+       messageQuery.addValueEventListener(new ValueEventListener() {
+           @Override
+           public void onDataChange(DataSnapshot dataSnapshot) {
+
+               try
+               {
+                   Message message = dataSnapshot.getValue(Message.class);
+                   message.getData();
+               }catch (Exception e)
+               {
+                   e.printStackTrace();
+
+               }
+
+           }
+
+           @Override
+           public void onCancelled(DatabaseError databaseError) {
+
+           }
+       });
+       */
+
+       mAdapter = new FirebaseRecyclerAdapter<Message, MessageViewHolder>(Message.class, R.layout.item_messsage,
+               MessageViewHolder.class, messageQuery) {
+           @Override
+           protected void populateViewHolder(final MessageViewHolder viewHolder, final Message message, final int position) {
+               final DatabaseReference postRef = getRef(position);
+
+               // Set click listener for the whole post view
+               final String postKey = postRef.getKey();
+               viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       // Launch PostDetailActivity
+//                       Intent intent = new Intent(getActivity(), ChatActivity.class);
+//                       intent.putExtra(ChatActivity.EXTRAS_USER, user);
+//                       startActivity(intent);
+                   }
+               });
+
+
+
+               // Bind Post to ViewHolder, setting OnClickListener for the star button
+               viewHolder.bindToMessage(message, new View.OnClickListener() {
+                   @Override
+                   public void onClick(View starView) {
+
+                   }
+               });
+           }
+       };
+
+       mRecyclerView.setAdapter(mAdapter);
+
+   }
+
+
+
+
+
+
+
+
 
 
 

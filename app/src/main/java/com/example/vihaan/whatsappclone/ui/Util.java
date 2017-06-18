@@ -10,23 +10,21 @@ public class Util {
     {
         String node = "";
 
-        switch (sendingUid.compareTo(receivingUid))
+        int result = sendingUid.compareTo(receivingUid);
+
+        if(result == 0)
         {
-            case 0:
-
-                break;
-
-            case 1:
-                //sending is greater than receiving
-                node = receivingUid + "-" +sendingUid  ;
-                break;
-
-            case -1:
-                //sending is lesser than receiving
-                node = sendingUid + "-" + receivingUid;
-                break;
 
         }
+        else if (result < 0)
+        {
+            node = sendingUid + "-" + receivingUid;
+        }
+        else if(result > 0)
+        {
+            node = receivingUid + "-" +sendingUid  ;
+        }
+
         return node;
     }
 }
