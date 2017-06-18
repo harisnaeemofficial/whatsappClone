@@ -40,6 +40,12 @@
             android:name=".ui.createUserScreen.CreateUserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ui.userListScreen.UserListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

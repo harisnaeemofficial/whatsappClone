@@ -1,10 +1,10 @@
 package com.example.vihaan.whatsappclone.ui.homescreen;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -17,6 +17,7 @@ import android.view.View;
 
 import com.example.vihaan.whatsappclone.R;
 import com.example.vihaan.whatsappclone.ui.common.adapters.ViewPagerTabAdapter;
+import com.example.vihaan.whatsappclone.ui.userListScreen.UserListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, UserListActivity.class);
+                startActivity(intent);
             }
         });
     }

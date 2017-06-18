@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.vihaan.whatsappclone.R;
-import com.example.vihaan.whatsappclone.ui.chatscreen.ChatFragment;
 
 /**
  * Created by vihaan on 18/06/17.
@@ -31,7 +30,7 @@ public class UserListActivity extends AppCompatActivity {
     private void showFragment()
     {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayout, ChatFragment.newInstance());
+        ft.replace(R.id.frameLayout, UserListFragment.newInstance());
         ft.commit();
     }
 
