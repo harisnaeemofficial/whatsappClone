@@ -16,13 +16,16 @@ public class User implements Parcelable {
     private String name = "";
     @SerializedName("profile_pic_url")
     @Expose
-    private String profilePicUrl= "";
+    private String profilePicUrl = "";
     @SerializedName("last_seen")
     @Expose
     private String lastSeen = "";
     @SerializedName("is_typing")
     @Expose
     private Boolean isTyping = false;
+    @SerializedName("status")
+    @Expose
+    private String status = "";
 
     public String getName() {
         return name;
@@ -56,6 +59,15 @@ public class User implements Parcelable {
         this.isTyping = isTyping;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -67,6 +79,7 @@ public class User implements Parcelable {
         dest.writeString(this.profilePicUrl);
         dest.writeString(this.lastSeen);
         dest.writeValue(this.isTyping);
+        dest.writeString(this.status);
     }
 
     public User() {
@@ -77,6 +90,7 @@ public class User implements Parcelable {
         this.profilePicUrl = in.readString();
         this.lastSeen = in.readString();
         this.isTyping = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.status = in.readString();
     }
 
     public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
