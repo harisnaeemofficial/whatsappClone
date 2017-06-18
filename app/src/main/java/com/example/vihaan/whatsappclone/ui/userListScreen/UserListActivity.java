@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.example.vihaan.whatsappclone.R;
 
@@ -22,8 +23,13 @@ public class UserListActivity extends AppCompatActivity {
 
     private void initViews()
     {
-
+        initToolbar();
         showFragment();
+    }
+
+    private void initToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
 
