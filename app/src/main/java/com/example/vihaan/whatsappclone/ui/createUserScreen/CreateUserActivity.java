@@ -55,10 +55,10 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.nextBtn:
-//                onNextButtonClicked();
+                onNextButtonClicked();
 
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(this, MainActivity.class);
+//                startActivity(intent);
                 break;
         }
 
@@ -115,6 +115,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
         mDatabase = FirebaseDatabase.getInstance().getReference();
         User user = new User();
         user.setName(usernameFromEmail(firebaseUser.getEmail()));
+        user.setUid(firebaseUser.getUid());
         mDatabase.child("users").child(firebaseUser.getUid()).setValue(user);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

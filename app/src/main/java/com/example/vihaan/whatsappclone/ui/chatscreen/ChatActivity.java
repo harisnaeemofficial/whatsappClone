@@ -46,7 +46,7 @@ public class ChatActivity extends AppCompatActivity {
     private void showFragment()
     {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayout, ChatFragment.newInstance());
+        ft.replace(R.id.frameLayout, ChatFragment.newInstance(getIntent().getExtras()));
         ft.commit();
     }
 

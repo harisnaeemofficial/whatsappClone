@@ -17,6 +17,10 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.example.vihaan.whatsappclone.R;
+import com.example.vihaan.whatsappclone.ui.Util;
+import com.example.vihaan.whatsappclone.ui.models.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -29,19 +33,29 @@ import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import static com.example.vihaan.whatsappclone.ui.chatscreen.ChatActivity.EXTRAS_USER;
+
 /**
  * Created by vihaan on 22/05/17.
  */
 
 public class ChatFragment extends Fragment {
 
-    public static ChatFragment newInstance() {
-
-        Bundle args = new Bundle();
-
+    public static ChatFragment newInstance(Bundle bundle) {
         ChatFragment fragment = new ChatFragment();
-        fragment.setArguments(args);
+        fragment.setArguments(bundle);
         return fragment;
+    }
+
+    private FirebaseAuth mAuth;
+    private User mUser;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+
+        Bundle bundle = getArguments();
+        mUser = bundle.getParcelable(EXTRAS_USER);
     }
 
     @Nullable
@@ -149,6 +163,18 @@ public class ChatFragment extends Fragment {
         String message = mEditText.getText().toString();
         mEditText.setText("");
         Log.d("send msg", message);
+
+        if(mAuth.getCurrentUser() != null)
+        {
+            FirebaseUser firebaseUser = mAuth.getCurrentUser();
+            String sendingUID = firebaseUser.getUid();
+            String receivingUID = mUser.getUid();
+            String node = Util.getMessageNode(sendingUID, receivingUID);
+
+
+
+        }
+
     }
 
     private ChatAdapter mChatAdapter;

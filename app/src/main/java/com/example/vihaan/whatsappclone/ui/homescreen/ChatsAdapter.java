@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.vihaan.whatsappclone.R;
 import com.example.vihaan.whatsappclone.ui.models.Chat;
-import com.example.vihaan.whatsappclone.ui.models.Message;
+import com.example.vihaan.whatsappclone.ui.models.ChatListMessage;
 import com.example.vihaan.whatsappclone.ui.models.User;
 import com.squareup.picasso.Picasso;
 
@@ -45,24 +45,24 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatViewHold
 
         Chat chat = mChats.get(position);
         User user = chat.getUser();
-        Message message = chat.getMessage();
+        ChatListMessage chatListMessage = chat.getChatListMessage();
 
         if(!TextUtils.isEmpty(user.getProfilePicUrl()))
         {
             Picasso.with(holder.userIV.getContext()).load(user.getProfilePicUrl()).into(holder.userIV);
         }
         holder.nameTV.setText(user.getName());
-        holder.messageTV.setText(message.getLastMessage());
-        holder.lastMessageTimeTV.setText(message.getLastMessageTime());
+        holder.messageTV.setText(chatListMessage.getLastMessage());
+        holder.lastMessageTimeTV.setText(chatListMessage.getLastMessageTime());
 
-        if(TextUtils.isEmpty(message.getUnreadMessageCount()))
+        if(TextUtils.isEmpty(chatListMessage.getUnreadMessageCount()))
         {
             holder.unreadMessageCountTV.setVisibility(View.GONE);
         }
         else
         {
             holder.unreadMessageCountTV.setVisibility(View.VISIBLE);
-            holder.unreadMessageCountTV.setText(chat.getMessage().getUnreadMessageCount());
+            holder.unreadMessageCountTV.setText(chat.getChatListMessage().getUnreadMessageCount());
         }
     }
 

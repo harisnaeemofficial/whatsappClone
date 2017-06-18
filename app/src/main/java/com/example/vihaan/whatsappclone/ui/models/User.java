@@ -27,6 +27,11 @@ public class User implements Parcelable {
     @Expose
     private String status = "";
 
+    @SerializedName("uid")
+    @Expose
+    private String uid = "";
+
+
     public String getName() {
         return name;
     }
@@ -67,6 +72,13 @@ public class User implements Parcelable {
         this.status = status;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     @Override
     public int describeContents() {

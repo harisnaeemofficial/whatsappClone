@@ -7,7 +7,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Message implements Parcelable {
+public class ChatListMessage implements Parcelable {
 
     @SerializedName("last_message")
     @Expose
@@ -56,24 +56,24 @@ public class Message implements Parcelable {
         dest.writeString(this.unreadMessageCount);
     }
 
-    public Message() {
+    public ChatListMessage() {
     }
 
-    protected Message(Parcel in) {
+    protected ChatListMessage(Parcel in) {
         this.lastMessage = in.readString();
         this.lastMessageTime = in.readString();
         this.unreadMessageCount = in.readString();
     }
 
-    public static final Parcelable.Creator<Message> CREATOR = new Parcelable.Creator<Message>() {
+    public static final Parcelable.Creator<ChatListMessage> CREATOR = new Parcelable.Creator<ChatListMessage>() {
         @Override
-        public Message createFromParcel(Parcel source) {
-            return new Message(source);
+        public ChatListMessage createFromParcel(Parcel source) {
+            return new ChatListMessage(source);
         }
 
         @Override
-        public Message[] newArray(int size) {
-            return new Message[size];
+        public ChatListMessage[] newArray(int size) {
+            return new ChatListMessage[size];
         }
     };
 }
