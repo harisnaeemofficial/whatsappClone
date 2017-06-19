@@ -272,7 +272,7 @@ public class ChatFragment extends Fragment {
        });
        */
 
-       mAdapter = new FirebaseRecyclerAdapter<Message, MessageViewHolder>(Message.class, R.layout.item_messsage,
+       mAdapter = new FirebaseRecyclerAdapter<Message, MessageViewHolder>(Message.class, R.layout.item_messsage_outgoing,
                MessageViewHolder.class, messageQuery) {
            @Override
            protected void populateViewHolder(final MessageViewHolder viewHolder, final Message message, final int position) {
