@@ -38,8 +38,9 @@
             />
         <!--android:drawableRight="@drawable/message_got_read_receipt_from_target"-->
 
+        <!--
         <ImageView
-            android:id="@+id/messageStateIV"
+            android:id="@+id/messageStatusIV"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_toRightOf="@id/timeTV"
@@ -47,6 +48,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginLeft="5dp"
             />
+            -->
 
     </RelativeLayout>
 
