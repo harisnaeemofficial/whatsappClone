@@ -149,7 +149,9 @@ public class ChatFragment extends Fragment {
     private void initRecyclerView()
     {
         mRecyclerView= (RecyclerView) getView().findViewById(R.id.chatsRecyclerView);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setStackFromEnd(true);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
     }
 
 
