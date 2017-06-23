@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -73,7 +74,11 @@ public class ChatActivity extends AppCompatActivity {
         nameTV.setText(mUser.getName());
 
         CircleImageView userIV = (CircleImageView) findViewById(R.id.userIV);
-        Picasso.with(this).load(mUser.getProfilePicUrl()).into(userIV);
+
+        if(!TextUtils.isEmpty(mUser.getProfilePicUrl()))
+        {
+            Picasso.with(this).load(mUser.getProfilePicUrl()).into(userIV);
+        }
 
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
