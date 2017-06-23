@@ -23,6 +23,7 @@ import com.example.vihaan.whatsappclone.ui.Database;
 import com.example.vihaan.whatsappclone.ui.Util;
 import com.example.vihaan.whatsappclone.ui.models.Message;
 import com.example.vihaan.whatsappclone.ui.models.User;
+import com.firebase.ui.database.ChangeEventListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -273,6 +274,8 @@ public class ChatFragment extends Fragment {
        });
        */
 
+
+
        mAdapter = new FirebaseRecyclerAdapter<Message, RecyclerView.ViewHolder>(Message.class, R.layout.item_messsage_outgoing,
                RecyclerView.ViewHolder.class, messageQuery) {
 
@@ -416,6 +419,29 @@ public class ChatFragment extends Fragment {
 //        }
                    chatTV.setText(message.getData());
                }
+           }
+
+           @Override
+           protected void onChildChanged(ChangeEventListener.EventType type, int index, int oldIndex) {
+               super.onChildChanged(type, index, oldIndex);
+
+               int lastPostion;
+               LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+               lastPostion = linearLayoutManager.findLastVisibleItemPosition();
+               if(lastPostion != -1 && type == ChangeEventListener.EventType.ADDED)
+               {
+
+                   if(index > lastPostion)
+                   {
+                       onNewMessageReceived();
+                   }
+               }
+           }
+
+           private void onNewMessageReceived()
+           {
+               int position = mAdapter.getItemCount() - 1;
+               mRecyclerView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
            }
        };
 
