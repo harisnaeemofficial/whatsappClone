@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Fragment> getFragments() {
 
         mFragments = new ArrayList<Fragment>();
-        mFragments.add(ChatsFragment.newInstance(""));
+        mFragments.add(UserChatsFragment.newInstance(""));
         mFragments.add(StatusFragment.newInstance());
         mFragments.add(CallsFragment.newInstance());
 

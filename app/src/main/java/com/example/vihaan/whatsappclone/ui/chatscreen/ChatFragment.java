@@ -23,6 +23,7 @@ import com.example.vihaan.whatsappclone.ui.Database;
 import com.example.vihaan.whatsappclone.ui.Util;
 import com.example.vihaan.whatsappclone.ui.models.Message;
 import com.example.vihaan.whatsappclone.ui.models.User;
+import com.example.vihaan.whatsappclone.ui.models.UserChat;
 import com.firebase.ui.database.ChangeEventListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,6 +59,7 @@ public class ChatFragment extends Fragment {
     private FirebaseDatabase mDatabase;
     private FirebaseAuth mAuth;
     private User mUser;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,8 +84,7 @@ public class ChatFragment extends Fragment {
         loadChats();
     }
 
-    private void initViews()
-    {
+    private void initViews() {
         initMessageBar();
         initRecyclerView();
     }
@@ -92,8 +93,7 @@ public class ChatFragment extends Fragment {
     private FloatingActionButton mFabButton;
     private EditText mEditText;
 
-    private void initMessageBar()
-    {
+    private void initMessageBar() {
         mEditText = (EditText) getView().findViewById(R.id.editText);
         mEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,8 +107,7 @@ public class ChatFragment extends Fragment {
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if(s.length() == 0)
-                {
+                if (s.length() == 0) {
                     showSendButton();
                 }
             }
@@ -120,8 +119,7 @@ public class ChatFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.length() == 0)
-                {
+                if (s.length() == 0) {
                     showAudioButton();
                 }
             }
@@ -134,9 +132,8 @@ public class ChatFragment extends Fragment {
             public void onClick(View v) {
 
                 String tag = (String) mFabButton.getTag();
-                Log.d("fab tag" , tag);
-                if(tag.equalsIgnoreCase(SEND_IMAGE))
-                {
+                Log.d("fab tag", tag);
+                if (tag.equalsIgnoreCase(SEND_IMAGE)) {
                     onSendButtonClicked();
                 }
 
@@ -146,9 +143,8 @@ public class ChatFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
 
-    private void initRecyclerView()
-    {
-        mRecyclerView= (RecyclerView) getView().findViewById(R.id.chatsRecyclerView);
+    private void initRecyclerView() {
+        mRecyclerView = (RecyclerView) getView().findViewById(R.id.chatsRecyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -156,47 +152,54 @@ public class ChatFragment extends Fragment {
 
 
     private static final String SEND_IMAGE = "send_image";
-    private void showSendButton()
-    {
+
+    private void showSendButton() {
         mFabButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.input_send));
         mFabButton.setTag(SEND_IMAGE);
     }
 
-    private static final String MIC_IMAGE= "mic_image";
-    private void showAudioButton()
-    {
+    private static final String MIC_IMAGE = "mic_image";
+
+    private void showAudioButton() {
         mFabButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.input_mic_white));
         mFabButton.setTag(MIC_IMAGE);
     }
 
-    private void onSendButtonClicked()
-    {
+    private void onSendButtonClicked() {
         String message = mEditText.getText().toString();
         mEditText.setText("");
         Log.d("send msg", message);
         writeTextMessage(message);
     }
 
-    private void writeTextMessage(String data)
-    {
+    private void writeTextMessage(String data) {
+
         Message message = new Message();
+
         message.setSenderUid(mAuth.getCurrentUser().getUid());
         message.setReceiverUid(mUser.getUid());
-
         message.setType("text");
         message.setData(data);
 
-        String messageNode = getMessageNode();
-       String node =  mDatabase.getReference().child(Database.NODE_MESSAGES).child(messageNode).push().getKey();
-        mDatabase.getReference().child(Database.NODE_MESSAGES).child(messageNode).child(node).setValue(message);
+        String messagesNode = getMessagesNode();
+        String messageNode = mDatabase.getReference().child(Database.NODE_MESSAGES).child(messagesNode).push().getKey();
+        mDatabase.getReference().child(Database.NODE_MESSAGES).child(messagesNode).child(messageNode).setValue(message);
+
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        UserChat userChat = new UserChat();
+        userChat.setUid(mAuth.getCurrentUser().getUid());
+        userChat.setLastMessage(data);
+
+//        String userChatKey = mDatabase.getReference().child(Database.NODE_USER_CHATS).child(mUser.getUid()).push().getKey();
+        mDatabase.getReference().child(Database.NODE_USER_CHATS).child(mUser.getUid()).child(user.getUid()).setValue(userChat);
+
     }
 
 
-    private String getMessageNode()
-    {
+    private String getMessagesNode() {
         String messageNode = null;
-        if(mAuth.getCurrentUser() != null)
-        {
+        if (mAuth.getCurrentUser() != null) {
             FirebaseUser firebaseUser = mAuth.getCurrentUser();
             String sendingUID = firebaseUser.getUid();
             String receivingUID = mUser.getUid();
@@ -206,8 +209,8 @@ public class ChatFragment extends Fragment {
     }
 
     private ChatAdapter mChatAdapter;
-    private void showChats()
-    {
+
+    private void showChats() {
         try {
             List<ChatMessage> chatMessages = getChatMessages();
             mChatAdapter = new ChatAdapter(getActivity(), chatMessages);
@@ -223,7 +226,7 @@ public class ChatFragment extends Fragment {
     private List<ChatMessage> getChatMessages() throws IOException, JSONException {
         List<ChatMessage> chatMessages = null;
 
-        JSONObject jsonObject ;
+        JSONObject jsonObject;
         String json;
 
         InputStream is = getActivity().getAssets().open("chatmessages.json");
@@ -237,7 +240,8 @@ public class ChatFragment extends Fragment {
         jsonObject = new JSONObject(json);
         JSONArray jsonArray = (JSONArray) jsonObject.get("1");
 
-        Type listType = new TypeToken<List<ChatMessage>>() {}.getType();
+        Type listType = new TypeToken<List<ChatMessage>>() {
+        }.getType();
 
         chatMessages = new Gson().fromJson(jsonArray.toString(), listType);
 
@@ -245,12 +249,12 @@ public class ChatFragment extends Fragment {
 
     }
 
-   private FirebaseRecyclerAdapter<Message, RecyclerView.ViewHolder> mAdapter;
-   private void loadChats()
-   {
+    private FirebaseRecyclerAdapter<Message, RecyclerView.ViewHolder> mAdapter;
 
-       String messageNode = getMessageNode();
-       Query messageQuery = mDatabase.getReference().child(Database.NODE_MESSAGES).child(messageNode);
+    private void loadChats() {
+
+        String messageNode = getMessagesNode();
+        Query messageQuery = mDatabase.getReference().child(Database.NODE_MESSAGES).child(messageNode);
 
        /*
        messageQuery.addValueEventListener(new ValueEventListener() {
@@ -277,206 +281,166 @@ public class ChatFragment extends Fragment {
        */
 
 
+        mAdapter = new FirebaseRecyclerAdapter<Message, RecyclerView.ViewHolder>(Message.class, R.layout.item_messsage_outgoing,
+                RecyclerView.ViewHolder.class, messageQuery) {
 
-       mAdapter = new FirebaseRecyclerAdapter<Message, RecyclerView.ViewHolder>(Message.class, R.layout.item_messsage_outgoing,
-               RecyclerView.ViewHolder.class, messageQuery) {
+            private final int TYPE_INCOMING = 1;
+            private final int TYPE_OUTGOING = 2;
 
-           private final int TYPE_INCOMING = 1;
-           private final int TYPE_OUTGOING = 2;
+            @Override
+            protected void populateViewHolder(final RecyclerView.ViewHolder viewHolder, final Message message, final int position) {
 
-           @Override
-           protected void populateViewHolder(final RecyclerView.ViewHolder viewHolder, final Message message, final int position) {
+                if (messageFromCurrentUser(message)) {
+                    populateOutgoingViewHolder((OutgoingViewHolder) viewHolder, message);
+                } else {
+                    populateIncomingViewHolder((IncomingViewHolder) viewHolder, message);
+                }
+            }
 
-               if(messageFromCurrentUser(message))
-               {
-                   populateOutgoingViewHolder((OutgoingViewHolder) viewHolder, message);
-               }
-               else
-               {
-                   populateIncomingViewHolder((IncomingViewHolder) viewHolder, message);
-               }
-           }
+            @Override
+            public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                View view;
+                switch (viewType) {
+                    case TYPE_INCOMING:
 
-           @Override
-           public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-               View view;
-               switch(viewType)
-               {
-                   case TYPE_INCOMING:
+                        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_messsage_incoming, parent, false);
+                        return new IncomingViewHolder(view);
 
-                       view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_messsage_incoming, parent, false);
-                       return new IncomingViewHolder(view);
+                    case TYPE_OUTGOING:
+                        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_messsage_outgoing, parent, false);
+                        return new OutgoingViewHolder(view);
+                }
+                return super.onCreateViewHolder(parent, viewType);
+            }
 
-                   case TYPE_OUTGOING:
-                       view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_messsage_outgoing, parent, false);
-                       return new OutgoingViewHolder(view);
-               }
-               return super.onCreateViewHolder(parent, viewType);
-           }
+            private void populateIncomingViewHolder(IncomingViewHolder viewHolder, Message message) {
+                // Bind Post to ViewHolder, setting OnClickListener for the star button
+                viewHolder.bindToMessage(message, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View starView) {
 
-           private void populateIncomingViewHolder(IncomingViewHolder viewHolder, Message message)
-           {
-               // Bind Post to ViewHolder, setting OnClickListener for the star button
-               viewHolder.bindToMessage(message, new View.OnClickListener() {
-                   @Override
-                   public void onClick(View starView) {
+                    }
+                });
 
-                   }
-               });
+            }
 
-           }
+            private void populateOutgoingViewHolder(OutgoingViewHolder viewHolder, Message message) {
 
-           private void populateOutgoingViewHolder(OutgoingViewHolder viewHolder, Message message)
-           {
+                // Bind Post to ViewHolder, setting OnClickListener for the star button
+                viewHolder.bindToMessage(message, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View starView) {
 
-               // Bind Post to ViewHolder, setting OnClickListener for the star button
-               viewHolder.bindToMessage(message, new View.OnClickListener() {
-                   @Override
-                   public void onClick(View starView) {
+                    }
+                });
 
-                   }
-               });
+            }
 
-           }
+            @Override
+            public int getItemViewType(int position) {
+                super.getItemViewType(position);
+                Message message = getItem(position);
 
-           @Override
-           public int getItemViewType(int position) {
-               super.getItemViewType(position);
-               Message message = getItem(position);
+                if (messageFromCurrentUser(message)) {
+                    return TYPE_OUTGOING;
+                }
 
-               if(messageFromCurrentUser(message))
-               {
-                   return TYPE_OUTGOING;
-               }
+                return TYPE_INCOMING;
+            }
 
-               return TYPE_INCOMING;
-           }
+            private boolean messageFromCurrentUser(Message message) {
+                String currentUid = mAuth.getCurrentUser().getUid();
+                if (currentUid.equalsIgnoreCase(message.getSenderUid())) {
+                    return true;
+                }
+                return false;
+            }
 
-           private boolean messageFromCurrentUser(Message message)
-           {
-               String currentUid = mAuth.getCurrentUser().getUid();
-               if(currentUid.equalsIgnoreCase(message.getSenderUid()))
-               {
-                  return true;
-               }
-               return false;
-           }
+            class IncomingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-           class IncomingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-               TextView chatTV, timeTV;
-               ImageView chatIV;
+                TextView chatTV, timeTV;
+                ImageView chatIV;
 //                       messageStatusIV;
 
-               public IncomingViewHolder(View v){
-                   super(v);
-                   chatTV = (TextView) v.findViewById(R.id.chatTV);
-                   timeTV = (TextView) v.findViewById(R.id.timeTV);
+                public IncomingViewHolder(View v) {
+                    super(v);
+                    chatTV = (TextView) v.findViewById(R.id.chatTV);
+                    timeTV = (TextView) v.findViewById(R.id.timeTV);
 //                   messageStatusIV = (ImageView) v.findViewById(messageStatusIV);
-                   chatIV = (ImageView) v.findViewById(R.id.chatIV);
-               }
+                    chatIV = (ImageView) v.findViewById(R.id.chatIV);
+                }
 
-               @Override
-               public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
 
-                   int position = getAdapterPosition();
-                   if(position != RecyclerView.NO_POSITION){
-                   }
-               }
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                    }
+                }
 
-               public void bindToMessage(Message message, View.OnClickListener starClickListener) {
-
-//        if (!TextUtils.isEmpty(user.getProfilePicUrl())) {
-//            Picasso.with(userIV.getContext()).load(user.getProfilePicUrl()).into(userIV);
-//        }
-                   chatTV.setText(message.getData());
-               }
-           }
-
-           class OutgoingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-               TextView chatTV, timeTV;
-               ImageView chatIV, messageStatusIV;
-
-               public OutgoingViewHolder(View v){
-                   super(v);
-                   chatTV = (TextView) v.findViewById(R.id.chatTV);
-                   timeTV = (TextView) v.findViewById(R.id.timeTV);
-                   messageStatusIV = (ImageView) v.findViewById(R.id.messageStatusIV);
-                   chatIV = (ImageView) v.findViewById(R.id.chatIV);
-               }
-
-               @Override
-               public void onClick(View v) {
-
-                   int position = getAdapterPosition();
-                   if(position != RecyclerView.NO_POSITION){
-                   }
-               }
-
-               public void bindToMessage(Message message, View.OnClickListener starClickListener) {
+                public void bindToMessage(Message message, View.OnClickListener starClickListener) {
 
 //        if (!TextUtils.isEmpty(user.getProfilePicUrl())) {
 //            Picasso.with(userIV.getContext()).load(user.getProfilePicUrl()).into(userIV);
 //        }
-                   chatTV.setText(message.getData());
-               }
-           }
+                    chatTV.setText(message.getData());
+                }
+            }
 
-           @Override
-           protected void onChildChanged(ChangeEventListener.EventType type, int index, int oldIndex) {
-               super.onChildChanged(type, index, oldIndex);
+            class OutgoingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-               int lastPostion;
-               LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
-               lastPostion = linearLayoutManager.findLastVisibleItemPosition();
-               if(lastPostion != -1 && type == ChangeEventListener.EventType.ADDED)
-               {
+                TextView chatTV, timeTV;
+                ImageView chatIV, messageStatusIV;
 
-                   if(index > lastPostion)
-                   {
-                       onNewMessageReceived();
-                   }
-               }
-           }
+                public OutgoingViewHolder(View v) {
+                    super(v);
+                    chatTV = (TextView) v.findViewById(R.id.chatTV);
+                    timeTV = (TextView) v.findViewById(R.id.timeTV);
+                    messageStatusIV = (ImageView) v.findViewById(R.id.messageStatusIV);
+                    chatIV = (ImageView) v.findViewById(R.id.chatIV);
+                }
 
-           private void onNewMessageReceived()
-           {
-               int position = mAdapter.getItemCount() - 1;
-               mRecyclerView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
-           }
-       };
+                @Override
+                public void onClick(View v) {
 
-       mRecyclerView.setAdapter(mAdapter);
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                    }
+                }
 
-   }
+                public void bindToMessage(Message message, View.OnClickListener starClickListener) {
 
+//        if (!TextUtils.isEmpty(user.getProfilePicUrl())) {
+//            Picasso.with(userIV.getContext()).load(user.getProfilePicUrl()).into(userIV);
+//        }
+                    chatTV.setText(message.getData());
+                }
+            }
 
+            @Override
+            protected void onChildChanged(ChangeEventListener.EventType type, int index, int oldIndex) {
+                super.onChildChanged(type, index, oldIndex);
 
+                int lastPostion;
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+                lastPostion = linearLayoutManager.findLastVisibleItemPosition();
+                if (lastPostion != -1 && type == ChangeEventListener.EventType.ADDED) {
 
+                    if (index > lastPostion) {
+                        onNewMessageReceived();
+                    }
+                }
+            }
 
+            private void onNewMessageReceived() {
+                int position = mAdapter.getItemCount() - 1;
+                mRecyclerView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
+            }
+        };
 
+        mRecyclerView.setAdapter(mAdapter);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
 
 
 }
