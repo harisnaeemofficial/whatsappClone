@@ -58,7 +58,7 @@ public class ChatFragment extends Fragment {
 
     private FirebaseDatabase mDatabase;
     private FirebaseAuth mAuth;
-    private User mUser;
+    private User mReceivingUser;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class ChatFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
         Bundle bundle = getArguments();
-        mUser = bundle.getParcelable(EXTRAS_USER);
+        mReceivingUser = bundle.getParcelable(EXTRAS_USER);
     }
 
     @Nullable
@@ -177,7 +177,7 @@ public class ChatFragment extends Fragment {
         Message message = new Message();
 
         message.setSenderUid(mAuth.getCurrentUser().getUid());
-        message.setReceiverUid(mUser.getUid());
+        message.setReceiverUid(mReceivingUser.getUid());
         message.setType("text");
         message.setData(data);
 
@@ -185,14 +185,21 @@ public class ChatFragment extends Fragment {
         String messageNode = mDatabase.getReference().child(Database.NODE_MESSAGES).child(messagesNode).push().getKey();
         mDatabase.getReference().child(Database.NODE_MESSAGES).child(messagesNode).child(messageNode).setValue(message);
 
-        FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseUser sendingUser = mAuth.getCurrentUser();
 
         UserChat userChat = new UserChat();
-        userChat.setUid(mAuth.getCurrentUser().getUid());
+        userChat.setUid(sendingUser.getUid());
         userChat.setLastMessage(data);
 
-//        String userChatKey = mDatabase.getReference().child(Database.NODE_USER_CHATS).child(mUser.getUid()).push().getKey();
-        mDatabase.getReference().child(Database.NODE_USER_CHATS).child(mUser.getUid()).child(user.getUid()).setValue(userChat);
+//        String userChatKey = mDatabase.getReference().child(Database.NODE_USER_CHATS).child(mReceivingUser.getUid()).push().getKey();
+
+        // add user chat in sending user
+        mDatabase.getReference().child(Database.NODE_USER_CHATS).child(mReceivingUser.getUid()).child(sendingUser.getUid()).setValue(userChat);
+
+
+        userChat.setUid(mReceivingUser.getUid());
+        // add user chat in receiving user
+        mDatabase.getReference().child(Database.NODE_USER_CHATS).child(sendingUser.getUid()).child(mReceivingUser.getUid()).setValue(userChat);
 
     }
 
@@ -202,7 +209,7 @@ public class ChatFragment extends Fragment {
         if (mAuth.getCurrentUser() != null) {
             FirebaseUser firebaseUser = mAuth.getCurrentUser();
             String sendingUID = firebaseUser.getUid();
-            String receivingUID = mUser.getUid();
+            String receivingUID = mReceivingUser.getUid();
             messageNode = Util.getMessageNode(sendingUID, receivingUID);
         }
         return messageNode;
