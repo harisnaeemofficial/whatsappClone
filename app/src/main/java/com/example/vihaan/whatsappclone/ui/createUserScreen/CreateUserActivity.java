@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.vihaan.whatsappclone.R;
+import com.example.vihaan.whatsappclone.ui.Util;
 import com.example.vihaan.whatsappclone.ui.homescreen.MainActivity;
 import com.example.vihaan.whatsappclone.ui.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -43,11 +44,15 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
 
     private Button mNextButton;
     private EditText mUsernameET;
+    private EditText mExistingUserET, mPasswordET;
 
     private void initViews() {
         mNextButton = (Button) findViewById(R.id.nextBtn);
         mNextButton.setOnClickListener(this);
         mUsernameET = (EditText) findViewById(R.id.userNameET);
+
+        mExistingUserET = (EditText) findViewById(R.id.existingUserET);
+        mPasswordET = (EditText) findViewById(R.id.passwordET);
     }
 
 
@@ -68,12 +73,51 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
 
     private void onNextButtonClicked() {
 
+        if(mExistingUserET.getText().toString().length() > 0)
+        {
+            loginExistingUser();
+            return;
+        }
+
         mUserName = mUsernameET.getText().toString();
         if (!TextUtils.isEmpty(mUserName)) {
             createUser();
         } else {
             Toast.makeText(this, "User name can not be blank", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void loginExistingUser()
+    {
+        String user = mExistingUserET.getText().toString();
+        String password = mPasswordET.getText().toString();
+
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(user, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                Log.d(tag, "signInUser:oncomplete:" + task.isSuccessful());
+
+                hideProgressDialog();
+
+
+                if (task.isSuccessful()) {
+                    onAuthSuccess(task.getResult().getUser());
+                    Util.updateToken();
+                } else {
+                    try {
+                        Exception e = task.getException();
+                        e.printStackTrace();
+                        Log.d("exception:", e.getMessage());
+                        Toast.makeText(CreateUserActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.d("exception:", e.getMessage());
+                    }
+                }
+
+            }
+        });
     }
 
     private DatabaseReference mDatabase;
@@ -94,6 +138,7 @@ public class CreateUserActivity extends AppCompatActivity implements View.OnClic
 
                         if (task.isSuccessful()) {
                             onAuthSuccess(task.getResult().getUser());
+                            Util.updateToken();
                         } else {
                             try {
                                 Exception e = task.getException();

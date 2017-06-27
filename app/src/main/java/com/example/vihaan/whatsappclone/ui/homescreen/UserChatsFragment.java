@@ -129,12 +129,12 @@ public class UserChatsFragment extends Fragment {
                     }
                 });
             }
-
             @Override
             public void onViewDetachedFromWindow(UserChatViewHolder holder) {
                 holder.onViewDetachedFromWindow();
                 super.onViewDetachedFromWindow(holder);
             }
+
         };
 
         mRecyclerView.setAdapter(mAdapter);

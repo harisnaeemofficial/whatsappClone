@@ -14,3 +14,25 @@ snapshots
 _site
 *.apk
 
+.DS_Store
+.vscode
+node_modules/
+coverage/
+sandbox/
+npm_debug.log
+process.pid
+functions.json
+local.txt
+keyfile.json
+translate_apikey.json
+sheets
+doc/
+.nyc_output
+*.log
+config.json
+app.yaml
+test/system/configstore
+test/system/*.log
+.idea/
+test/firebase/
+test/system/test-log.txt
