@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -49,14 +50,25 @@ public class MessagingService extends FirebaseMessagingService {
         //todo: handle notification
         Log.d("data message", remoteMessage.getData().toString());
 
-        final String data = remoteMessage.getData().toString();
 
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             public void run() {
-                Toast.makeText(MessagingService.this.getApplicationContext(), data, Toast.LENGTH_SHORT).show();
-                Message message = new Gson().fromJson(remoteMessage.getData().toString(), Message.class);
-                onMessageReceived(message);
+                try {
+
+                    Gson gson = new Gson();
+                    String data = remoteMessage.getData().toString();
+
+                    Toast.makeText(MessagingService.this.getApplicationContext(), data, Toast.LENGTH_SHORT).show();
+
+                    JsonElement jsonElement  = gson.toJsonTree(remoteMessage.getData());
+                    Message message = gson.fromJson(jsonElement, Message.class);
+                    onMessageReceived(message);
+                }
+                catch(Exception e)
+                {
+                   e.printStackTrace();
+                }
             }
         });
 
