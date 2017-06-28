@@ -2,9 +2,7 @@ package com.example.vihaan.whatsappclone.services;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -16,13 +14,11 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.vihaan.whatsappclone.R;
 import com.example.vihaan.whatsappclone.ui.Database;
-import com.example.vihaan.whatsappclone.ui.homescreen.MainActivity;
 import com.example.vihaan.whatsappclone.ui.models.Message;
 import com.example.vihaan.whatsappclone.ui.models.User;
 import com.google.firebase.database.DataSnapshot;
@@ -37,7 +33,7 @@ import com.google.gson.JsonElement;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import static android.R.attr.id;
+import static android.R.attr.value;
 
 /*
  * Created by Mahmoud on 3/13/2017.
@@ -96,6 +92,9 @@ public class MessagingService extends FirebaseMessagingService {
             }
         });
     }
+
+    private final int NOTIFICATION_ID = 237;
+
     private void showNotification(final Context context, final User user, final Message message)
     {
 
@@ -104,10 +103,12 @@ public class MessagingService extends FirebaseMessagingService {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
 
-                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
 
                 String title = user.getName();
                 String text = message.getData();
+
+                /*
 
                 Intent notificationIntent = new Intent(context, MainActivity.class);
                 PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent,
@@ -126,7 +127,25 @@ public class MessagingService extends FirebaseMessagingService {
                         .setWhen(System.currentTimeMillis())
                         .setTicker(title)
                         .setContentIntent(contentIntent);
-                notificationManager.notify(id, builder.build());
+                notificationManager.notify(NOTIFICATION_ID, builder.build());
+
+                */
+
+
+                Notification.InboxStyle inboxStyle = new Notification.InboxStyle();
+                NotificationManager nManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                Notification.Builder builder1 = new Notification.Builder(context);
+//                builder1.setContentTitle("Lanes");
+                builder1.setContentTitle(user.getName());
+//                builder1.setContentText("Notification from Lanes"+value);
+                builder1.setContentText(message.getData());
+                builder1.setSmallIcon(R.drawable.ic_action_search);
+                builder1.setLargeIcon(bitmap);
+                builder1.setAutoCancel(true);
+                inboxStyle.setBigContentTitle("Enter Content Text");
+                inboxStyle.addLine("hi events "+value);
+                builder1.setStyle(inboxStyle);
+                nManager.notify("App Name",NOTIFICATION_ID,builder1.build());
             }
 
             @Override
@@ -143,6 +162,15 @@ public class MessagingService extends FirebaseMessagingService {
         Picasso.with(this).load(user.getProfilePicUrl()).into(target);
 
     }
+
+
+
+    private void showMultipleMessageNotification()
+    {
+
+
+    }
+
 
 
     private Bitmap getCircleBitmap(Bitmap bitmap) {
