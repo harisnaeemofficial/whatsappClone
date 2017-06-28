@@ -5,6 +5,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
@@ -24,6 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import static android.R.attr.id;
 
@@ -73,34 +77,52 @@ public class MessagingService extends FirebaseMessagingService {
             }
         });
     }
-    private void showNotification(Context context, User user, Message message)
+    private void showNotification(final Context context, final User user, final Message message)
     {
 
-        User sendingUser;
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Target target = new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
 
-//        String title = context.getString(titleResId);
-        String title = user.getName();
-//        String text = context.getString(textResId);
-        String text = message.getData();
+                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+                String title = user.getName();
+                String text = message.getData();
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                Intent notificationIntent = new Intent(context, MainActivity.class);
+                PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
 //                .setSmallIcon(R.drawable.notification)
-                .setSmallIcon(R.drawable.ic_action_message)
-                .setContentTitle(title)
-                .setContentText(text)
-                .setDefaults(Notification.DEFAULT_ALL)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setAutoCancel(true)
-                .setWhen(System.currentTimeMillis())
-                .setTicker(title)
-                .setContentIntent(contentIntent);
-        notificationManager.notify(id, builder.build());
+//                        .setSmallIcon(R.drawable.ic_action_message)
+                        .setSmallIcon(R.drawable.ic_action_message)
+                        .setLargeIcon(bitmap)
+                        .setContentTitle(title)
+                        .setContentText(text)
+                        .setDefaults(Notification.DEFAULT_ALL)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setAutoCancel(true)
+                        .setWhen(System.currentTimeMillis())
+                        .setTicker(title)
+                        .setContentIntent(contentIntent);
+                notificationManager.notify(id, builder.build());
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+            }
+        };
+
+
+
+        Picasso.with(this).load(user.getProfilePicUrl()).into(target);
+
     }
 
 }
