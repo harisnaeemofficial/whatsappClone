@@ -20,6 +20,8 @@ import com.example.vihaan.whatsappclone.ui.chatscreen.ChatActivity;
 import com.example.vihaan.whatsappclone.ui.common.adapters.ViewPagerTabAdapter;
 import com.example.vihaan.whatsappclone.ui.models.User;
 import com.example.vihaan.whatsappclone.ui.userListScreen.UserListActivity;
+import com.example.vihaan.whatsappclone.ui.welcomeScreen.WelcomeActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,7 +127,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(this, WelcomeActivity.class));
+            finish();
             return true;
         }
 
