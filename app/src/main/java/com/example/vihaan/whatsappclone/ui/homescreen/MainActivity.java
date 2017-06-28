@@ -16,7 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.vihaan.whatsappclone.R;
+import com.example.vihaan.whatsappclone.ui.chatscreen.ChatActivity;
 import com.example.vihaan.whatsappclone.ui.common.adapters.ViewPagerTabAdapter;
+import com.example.vihaan.whatsappclone.ui.models.User;
 import com.example.vihaan.whatsappclone.ui.userListScreen.UserListActivity;
 
 import java.util.ArrayList;
@@ -30,7 +32,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        init();
+    }
+
+    private void init() {
+        initData();
         initViews();
+    }
+
+    private void initData() {
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null)
+        {
+            User user = bundle.getParcelable(ChatActivity.EXTRAS_USER);
+            if(user != null)
+            {
+                Intent intent = new Intent(this, ChatActivity.class);
+                intent.putExtra(ChatActivity.EXTRAS_USER, user);
+                startActivity(intent);
+            }
+        }
     }
 
     private void initViews() {

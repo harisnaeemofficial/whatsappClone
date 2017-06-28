@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.vihaan.whatsappclone.R;
 import com.example.vihaan.whatsappclone.ui.Database;
+import com.example.vihaan.whatsappclone.ui.chatscreen.ChatActivity;
 import com.example.vihaan.whatsappclone.ui.homescreen.MainActivity;
 import com.example.vihaan.whatsappclone.ui.models.Message;
 import com.example.vihaan.whatsappclone.ui.models.User;
@@ -112,6 +113,7 @@ public class MessagingService extends FirebaseMessagingService {
                 String text = message.getData();
 
                 Intent notificationIntent = new Intent(context, MainActivity.class);
+                notificationIntent.putExtra(ChatActivity.EXTRAS_USER, user);
                 PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT);
                 /*
