@@ -142,7 +142,7 @@ public class MessagingService extends FirebaseMessagingService {
                 builder1.setContentTitle(user.getName());
 //                builder1.setContentText("Notification from Lanes"+value);
                 builder1.setContentText(message.getData());
-                builder1.setSmallIcon(R.drawable.ic_action_search);
+                builder1.setSmallIcon(R.drawable.notifybar);
                 builder1.setLargeIcon(bitmap);
                 builder1.setContentIntent(contentIntent);
                 builder1.setAutoCancel(true);
