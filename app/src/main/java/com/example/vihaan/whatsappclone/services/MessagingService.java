@@ -2,7 +2,9 @@ package com.example.vihaan.whatsappclone.services;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.vihaan.whatsappclone.R;
 import com.example.vihaan.whatsappclone.ui.Database;
+import com.example.vihaan.whatsappclone.ui.homescreen.MainActivity;
 import com.example.vihaan.whatsappclone.ui.models.Message;
 import com.example.vihaan.whatsappclone.ui.models.User;
 import com.google.firebase.database.DataSnapshot;
@@ -108,11 +111,11 @@ public class MessagingService extends FirebaseMessagingService {
                 String title = user.getName();
                 String text = message.getData();
 
-                /*
-
                 Intent notificationIntent = new Intent(context, MainActivity.class);
                 PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT);
+                /*
+
 
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
 //                .setSmallIcon(R.drawable.notification)
@@ -141,6 +144,7 @@ public class MessagingService extends FirebaseMessagingService {
                 builder1.setContentText(message.getData());
                 builder1.setSmallIcon(R.drawable.ic_action_search);
                 builder1.setLargeIcon(bitmap);
+                builder1.setContentIntent(contentIntent);
                 builder1.setAutoCancel(true);
                 inboxStyle.setBigContentTitle("Enter Content Text");
                 inboxStyle.addLine("hi events "+value);
