@@ -1,4 +1,5 @@
 # whatsappClone
 Whatsapp android clone
 
-![Alt text](/screenshots/device-2017-06-29-164146.png?raw=true "Optional Title")
+<a href="/screenshots/device-2017-06-29-164146.png"><img src="/screenshots/device-2017-06-29-164146.png" width="30%"/></a> <a href="/screenshots/device-2017-06-29-165918.png"><img src="/screenshots/device-2017-06-29-165918.png" width="30%"/></a> <a href="/screenshots/device-2017-06-29-164627.png"><img src="/screenshots/device-2017-06-29-164627.png" width="30%"/></a>
+
