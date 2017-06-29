@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:background="@drawable/balloon_incoming_normal"
+        android:layout_marginRight="30dp"
         >
 
 
@@ -23,7 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:text="hello wassup"
+            android:layout_toLeftOf="@+id/timeTV"
+            android:text="hello wassup asdfjlkasjdflk alksjdflkajs dfllaksdfjalskdjf"
             android:textColor="@android:color/black" />
 
         <TextView
@@ -31,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="10:45 PM"
-            android:layout_toRightOf="@id/chatTV"
+            android:layout_alignParentRight="true"
             android:textSize="12sp"
             android:layout_marginTop="8dp"
             android:drawablePadding="5dp"
